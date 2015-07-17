@@ -1,0 +1,15 @@
+source "https://rubygems.org"
+
+gem "typhoeus"
+gem "vcr"
+gem "webmock"
+
+gem "pry"
+gem "pry-byebug"
+gem "pry-doc"
+gem "pry-docmore"
+gem "pry-stack_explorer"
+gem "pry-rescue"
+gem "bond"
+gem "jist"
+gem "yard"
