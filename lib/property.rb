@@ -12,42 +12,23 @@ module KigoConnector
         end
       end
 
+      def self.list
+        response = ApiCall.api_request("listProperties2", nil)
+
+        properties = []
+        response.data.each do |property|
+          properties << Property.new(property["PROP_ID"])
+        end
+
+        properties
+      end
+
       def info
         @info ||= read_info
       end
 
       def pricing
         @rates ||= read_pricing_info
-      end
-
-      def fees
-        @rates ||= read_pricing_info
-        @fees
-      end
-
-      def dicounts
-        @rates ||= read_pricing_info
-        @discounts
-      end
-
-      def deposit
-        @rates ||= read_pricing_info
-        @deposit
-      end
-
-      def currency
-        @rates ||= read_pricing_info
-        @currency
-      end
-
-      def per_guest_charge
-        @rates ||= read_pricing_info
-        @per_guest_charge
-      end
-
-      def periods
-        @rates ||= read_pricing_info
-        @periods
       end
 
       def real_time_pricing_calculaton(checkin, checkout, guests)
@@ -63,15 +44,11 @@ module KigoConnector
         response.data
       end
 
-      def self.list
-        response = ApiCall.api_request("listProperties2", nil)
-
-        properties = []
-        response.data.each do |property|
-          properties << Property.new(property["PROP_ID"])
+      %w(fees discounts deposit currency per_request_charge periods).each do |accessor|
+        define_method accessor.to_sym do
+          @rates ||= read_pricing_info
+          instance_variable_get("@#{accessor}")
         end
-
-        properties
       end
 
       class Period
@@ -120,7 +97,7 @@ module KigoConnector
           else
             fee_values = fee_info["VALUE"]
           end
-            @fees << Fee.new(fee_info["FEE_TYPE_ID"], fee_info["INCLUDE_IN_RENT"], fee_info["UNIT"], fee_values)
+          @fees << Fee.new(fee_info["FEE_TYPE_ID"], fee_info["INCLUDE_IN_RENT"], fee_info["UNIT"], fee_values)
         end
 
         @discounts = response.data["PRICING"]["DISCOUNTS"]
