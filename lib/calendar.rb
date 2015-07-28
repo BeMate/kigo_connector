@@ -5,7 +5,7 @@ module KigoConnector
       attr_reader :property, :reservation_id, :check_in, :check_out, :status, :owned
 
       def initialize(property_id, reservation_id, check_in, check_out, status, owned)
-        @property_id = property_id
+        @property = Property.new(property_id)
         @reservation_id = reservation_id
         @check_in = check_in
         @check_out = check_out
