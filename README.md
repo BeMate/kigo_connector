@@ -6,7 +6,7 @@ Kigo API wrapper.
 
 ## TODO
 
-- Change test suit so it uses RSpec.
+- ~~Change test suit so it uses RSpec.~~
 - Handle errors on API calls (bad request, empty response, etc)
 - We must return somehow the diff ids when the Kigo API provide us
   with it.

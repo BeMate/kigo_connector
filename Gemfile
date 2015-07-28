@@ -5,6 +5,7 @@ gem "typhoeus"
 group :test do
   gem "vcr"
   gem "webmock"
+  gem "rspec"
 end
 
 group :development do
