@@ -17,7 +17,7 @@ module KigoConnector
       end
 
       def pricing
-        @pricing ||= read_pricing_info
+        @rates ||= read_pricing_info
       end
 
       def fees
