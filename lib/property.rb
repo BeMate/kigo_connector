@@ -51,6 +51,8 @@ module KigoConnector
         end
       end
 
+      private
+
       class Period
         attr_reader :check_in, :check_out, :name, :stay_min, :weekly, :nightly_amounts
 
@@ -64,9 +66,6 @@ module KigoConnector
         end
       end
 
-
-      private
-
       Fee = Struct.new(:type_id, :include_in_rent, :unit, :value)
       FeeValue = Struct.new(:stay_from, :unit, :value)
       PerGuestCharge = Struct.new(:type, :standard, :max)
@@ -77,15 +76,28 @@ module KigoConnector
       end
 
       def read_pricing_info
-        require 'pry'
         response = ApiCall.api_request("readPropertyPricingSetup", "PROP_ID": self.id)
 
-        @currency = response.data["PRICING"]["CURRENCY"]
+        set_currency(response)
+        set_per_guest_charge(response)
+        set_fees(response)
+        set_discounts(response)
+        set_desposit(response)
+        set_periods(response)
+      end
 
+      def set_currency(response)
+        @currency = response.data["PRICING"]["CURRENCY"]
+      end
+
+      def set_per_guest_charge(response)
         per_guest_charge_info = response.data["PRICING"]["RENT"]["PERGUEST_CHARGE"]
         @per_guest_charge = PerGuestCharge.new(per_guest_charge_info["TYPE"],
                                                per_guest_charge_info["STANDARD"],
                                                per_guest_charge_info["MAX"])
+      end
+
+      def set_fees(response)
         @fees = []
         response.data["PRICING"]["FEES"]["FEES"].each do |fee_info|
 
@@ -99,11 +111,17 @@ module KigoConnector
           end
           @fees << Fee.new(fee_info["FEE_TYPE_ID"], fee_info["INCLUDE_IN_RENT"], fee_info["UNIT"], fee_values)
         end
+      end
 
+      def set_discounts(response)
         @discounts = response.data["PRICING"]["DISCOUNTS"]
+      end
 
+      def set_desposit(response)
         @deposit = response.data["PRICING"]["DEPOSIT"]
+      end
 
+      def set_periods(response)
         @periods = []
         response.data["PRICING"]["RENT"]["PERIODS"].each do |period_info|
           @periods << Period.new(period_info["CHECK_IN"],
