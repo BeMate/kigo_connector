@@ -2,7 +2,7 @@ module KigoConnector
   module V1
 
     class Property
-      attr_reader :id, :pricing, :fees, :discounts, :deposit, :currency, :per_guest_charge, :periods
+      attr_reader :id, :info, :pricing, :fees, :discounts, :deposit, :currency, :per_guest_charge, :periods
 
       def initialize(id)
         if !id.nil?
