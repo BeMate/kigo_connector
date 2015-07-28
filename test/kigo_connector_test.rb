@@ -45,4 +45,11 @@ class KigoConnectorTest < MiniTest::Test
     end
   end
 
+  def test_property_rate
+    VCR.use_cassette("property_pricing_setup_v1") do
+      property = KigoConnector::V1::Property.new(62637)
+      assert_equal 36, property.periods.size
+    end
+  end
+
 end
