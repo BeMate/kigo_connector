@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe KigoConnector::V1::ApiCall do
+RSpec.describe KigoConnector::ApiCall do
 
   describe "#api_request" do
 
@@ -8,8 +8,8 @@ RSpec.describe KigoConnector::V1::ApiCall do
 
       it "raises ApiCallError exception" do
         expect {
-          KigoConnector::V1::ApiCall.api_request("foo", {})
-        }.to raise_exception KigoConnector::V1::ApiCallError
+          KigoConnector::ApiCall.api_request("foo", {})
+        }.to raise_exception KigoConnector::ApiCallError
       end
 
     end
