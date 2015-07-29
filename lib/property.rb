@@ -1,6 +1,9 @@
 module KigoConnector
   module V1
 
+    class PropertyNotFound < RuntimeError
+    end
+
     class Property
       attr_reader :id, :info, :pricing, :fees, :discounts, :deposit, :currency, :per_guest_charge, :periods
 
@@ -8,12 +11,13 @@ module KigoConnector
         if !id.nil?
           @id = id
         else
-          raise Exception.new("ID is #{id.inspect}")
+          raise PropertyException.new("ID is #{id.inspect}")
         end
       end
 
       def self.list
         response = ApiCall.api_request("listProperties2", nil)
+        raise PropertyNotFound(response.raw.body) if response.data.nil?
 
         properties = []
         response.data.each do |property|
@@ -40,6 +44,7 @@ module KigoConnector
                                         "RES_N_ADULTS": guests,
                                         "RES_N_CHILDREN": 0,
                                         "RES_N_BABIES": 0})
+        raise PropertyNotFound(response.raw.body) if response.data.nil?
 
         response.data
       end
@@ -72,11 +77,14 @@ module KigoConnector
 
       def read_info
         response = ApiCall.api_request("readProperty2", "PROP_ID": self.id)
+        raise PropertyNotFound.new(response.raw.body) if response.data.nil?
+
         response.data["PROP_INFO"]
       end
 
       def read_pricing_info
         response = ApiCall.api_request("readPropertyPricingSetup", "PROP_ID": self.id)
+        raise PropertyNotFound.new(response.raw.body) if response.data.nil?
 
         set_currency(response)
         set_per_guest_charge(response)

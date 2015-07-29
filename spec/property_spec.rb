@@ -16,19 +16,33 @@ RSpec.describe KigoConnector::V1::Property do
 
   describe "#info" do
 
-    it "returns info for a property" do
-      VCR.use_cassette("property_info_v1") do
-        property = KigoConnector::V1::Property.new(62637)
-        expect(property.info["PROP_NAME"]).to eq "B34.2.3 | Sky Terrace Güell III"
+    context "for an existing/accesible property" do
+
+      it "returns info for a property" do
+        VCR.use_cassette("property_info_v1") do
+          property = KigoConnector::V1::Property.new(62637)
+          expect(property.info["PROP_NAME"]).to eq "B34.2.3 | Sky Terrace Güell III"
+        end
       end
     end
 
+    context "for a non existing/accesible property" do
+
+      it "raises PropertyNotFound" do
+        VCR.use_cassette("property_info_v1") do
+          property = KigoConnector::V1::Property.new(999999999999)
+          expect { property.info["PROP_NAME"].to raise_exception KigoConnector::V1::PropertyNotFound }
+        end
+      end
+
+    end
   end
+
 
   describe "#real_time_pricing_calculation" do
 
     it "returns price info" do
-      VCR.use_cassette("real_time_pricing_v1") do
+      VCR.use_cassette("real_time_pricing_v1", match_requests_on: [:method, :uri]) do
         property = KigoConnector::V1::Property.new(62637)
         price_info = property.real_time_pricing_calculaton("2015-07-28", "2015-07-31", 4)
         expect(price_info["TOTAL_AMOUNT"]).to eq "515.64"
@@ -47,6 +61,5 @@ RSpec.describe KigoConnector::V1::Property do
     end
 
   end
-
 
 end
