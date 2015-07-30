@@ -27,14 +27,14 @@ crendetials.example.yml for an example).
 Instantiate a Property using its ID:
 
 ```
-property = KigoConnector::Property.new(1234)
-=> => #<KigoConnector::Property:0x007f803fc7afa8 @api_version="1", @id=1234>
+$ property = KigoConnector::Property.new(1234)
+=> #<KigoConnector::Property:0x007f803fc7afa8 @api_version="1", @id=1234>
 ```
 Now you can access info, pricing, fees, discounts, deposit,
 currency, per_guest_charge and periods
 
 ```
-property.info
+$ property.info
 => {"PROP_NAME"=>"Very nice place",
  "PROP_STREETNO"=>"34",
  "PROP_ADDR1"=>"Calle No Existente",
@@ -59,7 +59,7 @@ property.info
  "PROP_MAXGUESTS_ADULTS"=>6,
  [...]
 
-property.fees
+$ property.fees
 => [#<struct KigoConnector::Property::Fee type_id=3, include_in_rent=false, unit="AMOUNT", value="90.00">,
  #<struct KigoConnector::Property::Fee
   type_id=10,
@@ -82,6 +82,7 @@ account by doing:
 `Property.list`
 
 ### Accessing availability information
+
 You could access the availability information by calling
 `Calendar.list`. That will return all the availability information
 related to your Kigo account as instances of Calendar.
@@ -90,14 +91,43 @@ That will also instantiate the property associated with it so you could
 access it directly:
 
 ```
-calendar = Calendar.list.first
-=>
-calendar.property.info
-=>
+$ calendar = Calendar.list.first
+=> #<KigoConnector::Calendar:0x007f9cd1f490f0
+ @check_in=#<Date: 2014-10-01 ((2456932j,0s,0n),+0s,2299161j)>,
+ @check_out=#<Date: 2015-05-31 ((2457174j,0s,0n),+0s,2299161j)>,
+ @owned=false,
+ @property=#<KigoConnector::Property:0x007f9cd1f490c8 @api_version="1", @id=31002>,
+ @reservation_id=1082203,
+ @status="CONFIRMED">
+
+$ calendar.property.info
+=>{"PROP_NAME"=>"Very nice place",
+ "PROP_STREETNO"=>"34",
+ "PROP_ADDR1"=>"Calle No Existente",
+ "PROP_ADDR2"=>"",
+ "PROP_ADDR3"=>"",
+ "PROP_APTNO"=>"2º3ª",
+ "PROP_POSTCODE"=>"08021",
+ "PROP_CITY"=>"Barcelona",
+ "PROP_REGION"=>"Sant Gervasi",
+ "PROP_COUNTRY"=>"ES",
+ "PROP_PHONE"=>"",
+ "PROP_AXSCODE"=>"",
+ "PROP_BEDROOMS"=>3,
+ "PROP_BEDS"=>5,
+ "PROP_BED_TYPES"=>[3, 4, 4, 4, 4],
+ "PROP_BATHROOMS"=>2,
+ "PROP_TOILETS"=>0,
+ "PROP_TYPE_ID"=>14,
+ "PROP_SIZE"=>100,
+ "PROP_SIZE_UNIT"=>"SQMETER",
+ "PROP_MAXGUESTS"=>6,
+ "PROP_MAXGUESTS_ADULTS"=>6,
+ [...]
 ```
 
 *You can (and most of the time you should) also pass a Diff ID as a
-parameter.*
+parameter to `calendar.list`*
 
 See the corresponding explanation on how to retrieve and use
 Diff IDs on the Kigo API documentation.
