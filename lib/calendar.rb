@@ -18,7 +18,7 @@ module KigoConnector
       calendars = []
       response.data["RES_LIST"].each do |calendar_info|
         calendars << Calendar.new(
-          KigoConnector::Property.new(calendar_info["PROP_ID"]),
+          calendar_info["PROP_ID"],
           calendar_info["RES_ID"],
           Date.parse(calendar_info["RES_CHECK_IN"]),
           Date.parse(calendar_info["RES_CHECK_OUT"]),
