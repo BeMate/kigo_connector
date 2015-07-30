@@ -13,7 +13,7 @@ module KigoConnector
     end
 
     # TO-DO: We should return the diff_id provided by the Kigo API
-    def self.list(diff_id)
+    def self.list(diff_id = nil)
       response = ApiCall.api_request("diffPropertyCalendarReservations", "DIFF_ID": diff_id)
       calendars = []
       response.data["RES_LIST"].each do |calendar_info|
