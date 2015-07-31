@@ -136,7 +136,40 @@ Property
 
 ### Kigo API versions
 
+It turns out, right now, Kigo has two different APIs living in
+production at the same time. The thing is, that those APIs (apart from
+the usual method deprecation, data format changes, etc) hold different
+datasets.
+
+So depending on your account you may find yourself having to query
+properties on two different endpoints.
+
+This library tries to make this process as transparent as possible:
+
+* Uses the same business objects no matter the API version.
+* When querying for Properties or Calendars, you have the option to
+provide a string representing the API version (1 or 2).
+* By default, all queries go to the version 1.
+
+This situation should be temporary as both API's versions (and their
+associated datasets) should become one.
+
+When this happens, all code to provide an API version will be remove,
+but all the client code using the default signatures (not providing
+any API version) will work without changes on the client side.
+
 ### Dealing with errors
+
+When the Kigo API returns a status code other than 200, this
+library will raise an ApiCallError (child of RuntimeError).
+
+When the Kigo API returns a request body with a code other than E_OK, this
+library will raise an ApiCallError (child of RuntimeError).
+
+ApiCallError will print the response body to ease the debugging
+process if necessary.
+
+**Clients using this library must deal with this.**
 
 
 ## TODO
