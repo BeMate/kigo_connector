@@ -28,10 +28,10 @@ RSpec.describe KigoConnector::Property do
 
       context "for a non existing/accesible property" do
 
-        it "raises PropertyNotFound" do
+        it "raises ApiCallError" do
           VCR.use_cassette("property_info_v1") do
             property = KigoConnector::Property.new(999999999999)
-            expect { property.info["PROP_NAME"].to raise_exception KigoConnector::PropertyNotFound }
+            expect { property.info["PROP_NAME"].to raise_exception KigoConnector::ApiCallError }
           end
         end
 
@@ -91,10 +91,10 @@ RSpec.describe KigoConnector::Property do
 
       context "for a non existing/accesible property" do
 
-        it "raises PropertyNotFound" do
+        it "raises ApiCallError" do
           VCR.use_cassette("property_info_v2") do
             property = KigoConnector::Property.new(62637, "2")
-            expect { property.info["PROP_NAME"].to raise_exception KigoConnector::PropertyNotFound }
+            expect { property.info["PROP_NAME"].to raise_exception KigoConnector::ApiCallError }
           end
         end
       end

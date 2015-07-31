@@ -16,7 +16,7 @@ module KigoConnector
       end_point = select_end_point(method, api_version)
 
       raw = Typhoeus::Request.new("#{end_point}", BASE_OPTIONS.merge(body: body.to_json)).run
-      raise ApiCallError.new(raw.body) if raw.response_code != 200
+      raise ApiCallError.new(raw.body) if raw.response_code != 200 || JSON.parse(raw.body)["API_RESULT_CODE"] != "E_OK"
 
       data = JSON.parse(raw.body)["API_REPLY"]
       Response.new(raw, data)
