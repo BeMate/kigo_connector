@@ -3,7 +3,7 @@ module KigoConnector
   class Property
     attr_reader :id, :api_version, :info, :pricing, :fees, :discounts, :deposit, :currency, :per_guest_charge, :periods
 
-    def initialize(id, api_version = "1")
+    def initialize(id:, api_version: "1")
       if !id.nil?
         @id = id
         @api_version = api_version
@@ -12,12 +12,12 @@ module KigoConnector
       end
     end
 
-    def self.list(api_version = "1")
+    def self.list(api_version: "1")
       response = ApiCall.api_request("listProperties2", nil, api_version)
 
       properties = []
       response.data.each do |property|
-        properties << Property.new(property["PROP_ID"], api_version)
+        properties << Property.new(id: property["PROP_ID"], api_version: api_version)
       end
 
       properties
@@ -32,12 +32,12 @@ module KigoConnector
     end
 
     # checkin and checkout should be passed as a string YYYY-MM-DD
-    def real_time_pricing_calculaton(checkin, checkout, guests)
+    def real_time_pricing_calculaton(check_in:, check_out:, guests:)
       response = ApiCall.api_request("computePricing",
                                      {"PROP_ID": self.id,
                                       "RES_CREATE":"#{Date.today}",
-                                      "RES_CHECK_IN":"#{checkin}",
-                                      "RES_CHECK_OUT":"#{checkout}",
+                                      "RES_CHECK_IN":"#{check_in}",
+                                      "RES_CHECK_OUT":"#{check_out}",
                                       "RES_N_ADULTS": guests,
                                       "RES_N_CHILDREN": 0,
                                       "RES_N_BABIES": 0},
