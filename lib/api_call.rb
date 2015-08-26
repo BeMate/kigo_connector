@@ -1,4 +1,6 @@
-require 'pry'
+require 'typhoeus'
+require 'yaml'
+
 module KigoConnector
 
   class ApiCall
