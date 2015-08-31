@@ -1,5 +1,3 @@
-require 'api_call'
-
 module KigoConnector
 
   class Property

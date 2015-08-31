@@ -1,5 +1,5 @@
-require 'vcr'
-require_relative "../kigo_connector"
+require "vcr"
+require "kigo_connector"
 
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/fixtures/vcr_cassettes'

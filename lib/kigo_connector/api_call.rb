@@ -1,5 +1,6 @@
-require 'typhoeus'
-require 'yaml'
+require "typhoeus"
+require "yaml"
+require "json"
 
 module KigoConnector
 
