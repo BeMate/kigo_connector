@@ -4,3 +4,5 @@ GPATH
 .ruby-version
 .credentials.yml
 spec/fixtures/vcr_cassettes/*
+Gemfile.lock
+*.gem
