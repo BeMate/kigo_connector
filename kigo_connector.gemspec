@@ -21,19 +21,9 @@ Gem::Specification.new do |spec|
 
   # Only with ruby 2.X
   spec.required_ruby_version = '~> 2'
-  spec.add_runtime_dependency "typhoeus", "~> 0"
-  spec.add_development_dependency "bundler", "~> 1.10"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "vcr", "~> 0"
-  spec.add_development_dependency "webmock", "~> 0"
-  spec.add_development_dependency "rspec", "~> 0"
-  spec.add_development_dependency "pry", "~> 0"
-  spec.add_development_dependency "pry-byebug", "~> 0"
-  spec.add_development_dependency "pry-doc", "~> 0"
-  spec.add_development_dependency "pry-docmore", "~> 0"
-  spec.add_development_dependency "pry-stack_explorer", "~> 0"
-  spec.add_development_dependency "pry-rescue", "~> 0"
-  spec.add_development_dependency "bond", "~> 0"
-  spec.add_development_dependency "jist", "~> 0"
-  spec.add_development_dependency "yard", "~> 0"
+  spec.add_runtime_dependency "typhoeus", "~> 0.7.2"
+
+  spec.add_development_dependency "vcr", "~> 2.9.3"
+  spec.add_development_dependency "webmock", "~> 1.21"
+  spec.add_development_dependency "rspec", "~> 3"
 end
