@@ -30,10 +30,10 @@ module KigoConnector
     def self.select_end_point(method, api_version)
       case api_version
       when "1"
-        credentials = YAML.load_file(".credentials.yml")["v1"]
+        credentials = YAML.load_file("./config/kigo.yml")["v1"]
         "https://#{credentials["user"]}:#{credentials["pass"]}@app.kigo.net/api/ra/v1/#{method}"
       when "2"
-        credentials = YAML.load_file(".credentials.yml")["v2"]
+        credentials = YAML.load_file("./config/kigo.yml")["v2"]
         "https://www.kigoapis.com/channels/v1/#{method}?subscription-key=#{credentials["subscription_key"]}"
       else
         raise ApiCallError.new("Wrong API version.")

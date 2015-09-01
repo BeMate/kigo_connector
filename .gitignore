@@ -2,7 +2,7 @@ GTAGS
 GRTAGS
 GPATH
 .ruby-version
-.credentials.yml
+config/
 spec/fixtures/vcr_cassettes/*
 Gemfile.lock
 *.gem
