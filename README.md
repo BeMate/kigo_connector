@@ -17,10 +17,9 @@ life of the object/s holding the data.
 
 ## Usage
 
-1. Provide account credentials on .credentials.yml (see
+1. Provide account credentials on config/kigo.yml (see
 crendetials.example.yml for an example).
 
-2.
 
 ### Accessing Property information
 
