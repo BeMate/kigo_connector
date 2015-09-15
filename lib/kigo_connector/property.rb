@@ -58,7 +58,7 @@ module KigoConnector
     class Period
       attr_reader :check_in, :check_out, :name, :stay_min, :weekly, :nightly_amounts
 
-      def initialize(check_in, check_out, name, stay_min, weekly, nightly_amounts)
+      def initialize(check_in:, check_out:, name:, stay_min:, weekly:, nightly_amounts:)
         @check_in = Date.parse(check_in)
         @check_out = Date.parse(check_out)
         @name = name
@@ -128,12 +128,12 @@ module KigoConnector
     def set_periods(response)
       @periods = []
       response.data["PRICING"]["RENT"]["PERIODS"].each do |period_info|
-        @periods << Period.new(period_info["CHECK_IN"],
-                               period_info["CHECK_OUT"],
-                               period_info["NAME"],
-                               period_info["STAY_MIN"],
-                               period_info["WEEKLY"],
-                               period_info["NIGHTLY_AMOUNTS"])
+        @periods << Period.new(check_in: period_info["CHECK_IN"],
+                               check_out: period_info["CHECK_OUT"],
+                               name: period_info["NAME"],
+                               stay_min: period_info["STAY_MIN"],
+                               weekly: period_info["WEEKLY"],
+                               nightly_amounts:period_info["NIGHTLY_AMOUNTS"])
       end
 
     end
