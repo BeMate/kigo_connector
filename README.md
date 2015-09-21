@@ -4,21 +4,21 @@ Kigo API wrapper.
 
 ## General philosophy
 
-The goal is to provide an object oriented wrapper over the Kigo API[^1] so a client, should be able to retrieve any
+The goal is to provide an object oriented wrapper over the [Kigo][kigo] API so a client should be able to retrieve any
 information from this channel manager using business domain objects
 like Property, Calendar, etc.
 
-By default, all the low level stuff like the underneath http requests
+By default, all the low level stuff like the underneath HTTP requests
 should be transparent for the clients using KigoConnector.
 
 All calls to the API are lazy, meaning that they will be fired only
-when it's strictly necessary, and they are memomized for the entire
-life of the object/s holding the data.
+when it's strictly necessary, and they are memoized for the entire
+life of the object(s) holding the data.
 
 ## Usage
 
-1. Provide account credentials on config/kigo.yml (see
-crendetials.example.yml for an example).
+1. Provide account credentials on `config/kigo.yml` (see
+`credentials.example.yml` for an example).
 
 
 ### Accessing Property information
@@ -30,7 +30,7 @@ $ property = KigoConnector::Property.new(1234)
 => #<KigoConnector::Property:0x007f803fc7afa8 @api_version="1", @id=1234>
 ```
 Now you can access info, pricing, fees, discounts, deposit,
-currency, per_guest_charge and periods
+currency, per_guest_charge and periods:
 
 ```
 $ property.info
@@ -130,8 +130,8 @@ parameter to `calendar.list`*
 
 See the corresponding explanation on how to retrieve and use
 Diff IDs on the Kigo API documentation.
-You can not ask the Kigo API for availability information based on a
-Property
+You can't ask the Kigo API for availability information based on a
+Property.
 
 ### Kigo API versions
 
@@ -150,37 +150,36 @@ This library tries to make this process as transparent as possible:
 provide a string representing the API version (1 or 2).
 * By default, all queries go to the version 1.
 
-This situation should be temporary as both API's versions (and their
+This situation should be temporary as both API versions (and their
 associated datasets) should become one.
 
-When this happens, all code to provide an API version will be remove,
+When this happens, all code to provide an API version will be removed,
 but all the client code using the default signatures (not providing
 any API version) will work without changes on the client side.
 
 ### Dealing with errors
 
 When the Kigo API returns a status code other than 200, this
-library will raise an ApiCallError (child of RuntimeError).
+library will raise an `ApiCallError` (child of `RuntimeError`).
 
-When the Kigo API returns a request body with a code other than E_OK, this
-library will raise an ApiCallError (child of RuntimeError).
+When the Kigo API returns a request body with a code other than `E_OK`, this
+library will raise an `ApiCallError` (child of `RuntimeError`).
 
-ApiCallError will print the response body to ease the debugging
+`ApiCallError` will print the response body to ease the debugging
 process if necessary.
 
 **Clients using this library must deal with this.**
-
 
 ## TODO
 
 - ~~Change test suit so it uses RSpec.~~
 - ~~Handle errors on API calls (bad request, empty response, etc)~~
-- We must return somehow the diff ids when the Kigo API provide us
+- We must return somehow the diff IDs when the Kigo API provide us
 with it.
-- Test based on VCR are nice but:
+- Tests based on VCR are nice but:
 - Fixtures are unreadable (body is encrypted).
 - Doesn't prevent to miserably fail on production if the API
 response change.
 - Make this library a gem.
 
-[^1]: http://kigo.net
+[kigo]: http://kigo.net
