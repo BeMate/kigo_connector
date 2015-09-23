@@ -56,15 +56,16 @@ module KigoConnector
     private
 
     class Period
-      attr_reader :check_in, :check_out, :name, :stay_min, :weekly, :nightly_amounts
+      attr_reader :check_in, :check_out, :name, :stay_min, :weekly, :nightly_amounts, :weekly_amounts
 
-      def initialize(check_in:, check_out:, name:, stay_min:, weekly:, nightly_amounts:)
+      def initialize(check_in:, check_out:, name:, stay_min:, weekly:, nightly_amounts:, weekly_amounts:)
         @check_in = Date.parse(check_in)
         @check_out = Date.parse(check_out)
         @name = name
         @stay_min = stay_min
         @weekly = weekly
         @nightly_amounts = nightly_amounts
+        @weekly_amounts = weekly_amounts
       end
     end
 
@@ -133,7 +134,8 @@ module KigoConnector
                                name: period_info["NAME"],
                                stay_min: period_info["STAY_MIN"],
                                weekly: period_info["WEEKLY"],
-                               nightly_amounts:period_info["NIGHTLY_AMOUNTS"])
+                               nightly_amounts: period_info["NIGHTLY_AMOUNTS"],
+                               weekly_amounts: period_info["WEEKLY_AMOUNTS"])
       end
 
     end
